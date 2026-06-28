@@ -25,7 +25,7 @@ Every new or modified `export`ed function ships a spec covering the happy path, 
 
 ## Fake timers
 
-Any spec that uses PrimeVue interactive components (overlays, dropdowns, split buttons) or calls `vi.setSystemTime` must install fake timers for the whole file:
+Any spec that calls `userEvent.type`/`click`, uses PrimeVue interactive components (overlays, dropdowns, split buttons), or calls `vi.setSystemTime` must install fake timers for the whole file. Benchmarked: real timers add ~25ms/file (avg 107.7ms vs 82.0ms test-phase time) from per-keystroke timer clamping in `userEvent` — free to fix, compounds across a suite.
 
 ```js
 beforeEach(() => {
